@@ -1,0 +1,14 @@
+{
+  "package": "com.example.sony.da.timer",
+  "manifestVersion": 1,
+  "name": "Running Timer",
+  "author": {
+    "name": "Sony"
+  },
+  "version": 1,
+  "versionName": "1.0.0",
+  "description": "Sony Corporation\nSpeaks the current time, elapsed time and location periodically.\nUses location data.",
+  "background": {
+    "pollingInterval": 900
+  }
+}

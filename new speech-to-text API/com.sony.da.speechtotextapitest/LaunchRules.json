@@ -1,0 +1,17 @@
+{
+  "voicePattern": [
+    {
+      "domain": "CUSTOMAPP",
+      "name": [
+        "speech test",
+        "cycling",
+        "number",
+        "hello"
+      ],
+      "phrase": [
+        "speech function test",
+        ".*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DaPlatform.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DaPlatform.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var PlatformCore_1 = require('../stub/PlatformCore');
+var XMLHttpRequestXS_1 = require('../stub/XMLHttpRequestXS');
+var ScriptsReplacer_1 = require('../stub/ScriptsReplacer');
+var core = new PlatformCore_1["default"]();
+var da = null;
+/**
+ * speechsynthesis.
+ * {@link https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html W3C}
+ *
+ * @class SpeechSynthesis
+ * @memberof da
+ * @property {boolean} speaking true:speaking
+ */
+var SpeechSynthesis = (function () {
+    function SpeechSynthesis() {
+        this.speaking = false;
+        if (SpeechSynthesis._instance) {
+            throw new Error("Must use the getInstance.");
+        }
+    }
+    /**
+     * returns the instance of SpeechSynthesis.
+     * @method getInstance
+     * @memberOf da.SpeechSynthesis
+     * @return {da.SpeechSynthesis}
+     */
+    SpeechSynthesis.getInstance = function () {
+        return SpeechSynthesis._instance;
+    };
+    /**
+     * callback function is invoked when speech started.
+     * @callback da.SpeechSynthesis~onstart
+     */
+    /**
+     * callback function is invoked when speech ended.
+     * @callback da.SpeechSynthesis~onend
+     */
+    /**
+     * callback function is invoked on errors.
+     * @callback da.SpeechSynthesis~onerror
+     * @param error {Object} error object
+     * @param error.code {number} error code:
+     * &lt;ul>
+     *  &lt;li>900: indicates that speech synthesis was interrupted
+     *  &lt;li>901: indicates that text size exceeded the limit
+     *  &lt;li>999: unidentified error
+     * &lt;ul>
+     * @param error.message {string} the detail message of this error
+     */
+    /**
+     * executing TTS.
+     *
+     * If speak() method is called before the previous speech completes, the new speech will take over and previous speech will be stopped.
+     * (language and speaker depend on segment packaging)
+     *
+     * @method speak
+     * @memberof da.SpeechSynthesis.prototype
+     * @async
+     * @param text {string} text to be spoken out. max 32767 bytes, the part exceeds the max size is ignored.
+     * @param callbackObject {Object} callback object
+     * @param callbackObject.onstart {da.SpeechSynthesis~onstart} callback function is invoked when speech starts
+     * @param callbackObject.onend {da.SpeechSynthesis~onend} callback function is invoked when speech ends
+     * @param callbackObject.onerror {da.SpeechSynthesis~onerror} callback function is invoked on errors
+     */
+    SpeechSynthesis.prototype.speak = function (text, callbacks, option) {
+        var _this = this;
+        var replacedText = ScriptsReplacer_1["default"].replaceReferenceString(text, core.talkStrings, core.systemArgs, core.cueVoiceArgs);
+        var intercepted = {
+            onstart: function () {
+                _this.speaking = true;
+                if (callbacks.onstart) {
+                    callbacks.onstart();
+                }
+            },
+            onend: function () {
+                _this.speaking = false;
+                if (callbacks.onend) {
+                    callbacks.onend();
+                }
+            },
+            onerror: function (error) {
+                _this.speaking = false;
+                if (callbacks.onerror) {
+                    callbacks.onerror(error);
+                }
+            }
+        };
+        console.log("SpeechSynthesis.speak text", replacedText);
+        core.postMessage({
+            method: 'speak',
+            callbackId: core.registerCallback(intercepted),
+            args: {
+                text: replacedText,
+                option: option
+            }
+        });
+    };
+    /**
+     * terminates the playback of speech synthesis.
+     *
+     * @method cancel
+     * @memberof da.SpeechSynthesis.prototype
+     */
+    SpeechSynthesis.prototype.cancel = function () {
+        if (this.speaking) {
+            core.postMessage({ method: 'cancelSpeech' });
+        }
+    };
+    SpeechSynthesis._instance = new SpeechSynthesis();
+    return SpeechSynthesis;
+}());
+// original storage should be consealed
+var _originalStorage = localStorage;
+window['localStorage'] = undefined;
+/**
+ * sets and gets items in key-value pairs on Nigel.&lt;br>
+ * (Don't use LocalStorage and SessionStorage.)
+ * @class Storage
+ * @memberof da
+ */
+var Storage = (function () {
+    function Storage() {
+    }
+    /**
+     * sets an item.
+     * @method setItem
+     * @memberof da.Storage.prototype
+     * @param key {string} key
+     * @param data {string} data
+     */
+    Storage.prototype.setItem = function (key, data) {
+        _originalStorage.setItem(key, data);
+    };
+    /**
+     * gets the item associated with the specified key.
+     * @method getItem
+     * @memberof da.Storage.prototype
+     * @param key {string} key
+     * @return {string} data
+     */
+    Storage.prototype.getItem = function (key) {
+        return _originalStorage.getItem(key);
+    };
+    /**
+     * gets the key that associated with the specified position.
+     * @method key
+     * @memberof da.Storage.prototype
+     * @param index {number} index
+     * @return {string} key
+     */
+    Storage.prototype.key = function (index) {
+        return _originalStorage.key(index);
+    };
+    /**
+     * returns the number of stored items.
+     * @memberof da.Storage.prototype
+     * @method length
+     * @return {number} The number of items
+     */
+    Storage.prototype.length = function () {
+        return _originalStorage.length;
+    };
+    /**
+     * deletes an item associated to the specified key.
+     * @method removeItem
+     * @memberof da.Storage.prototype
+     * @param key {string} key
+     */
+    Storage.prototype.removeItem = function (key) {
+        _originalStorage.removeItem(key);
+    };
+    /**
+     * remove all stored items.
+     * @memberof da.Storage.prototype
+     * @method clear
+     */
+    Storage.prototype.clear = function () {
+        _originalStorage.clear();
+    };
+    return Storage;
+}());
+/**
+ * Geo-location.
+ * @class Geolocation
+ * @memberOf da
+ * @since 2.7
+ */
+var Geolocation = (function () {
+    function Geolocation() {
+    }
+    /**
+     * callback function to be invoked when geo-location was successfully retrieved.
+     * @callback da.Geolocation~onsuccess
+     * @param coordinates {Object}
+     * @param coordinates.latitude {number} latitude
+     * @param coordinates.longitude {number} longitude
+     * @param coordinates.accuracy {number} accuracy
+     */
+    /**
+     * callback function to be invoked when get geo-location could not be retrieved successfully.
+     * @callback da.Geolocation~onerror
+     * @param error {Object}
+     * @param error.code {number} error code
+     * &lt;ul>
+     *  &lt;li>900: failed to get GPS value.
+     *  &lt;li>999: unidentified error
+     * &lt;ul>
+     * @param error.message {string} the detail message of this error
+     */
+    /**
+     * returns geo-location of current location.
+     *
+     * @method getCurrentPosition
+     * @memberOf da.Geolocation.prototype
+     * @param callbackObject {Object} callback object
+     * @param callbackObject.onsuccess {da.Geolocation~onsuccess} callback function to be invoked when the geo-location of current location was successfully retrieved.
+     * @param callbackObject.onerror {da.Geolocation~onerror} callback function to be invoked when geo-location of current location could not be retrieved successfully.
+     */
+    Geolocation.prototype.getCurrentPosition = function (callbacks, option) {
+        var intercepted = {
+            onsuccess: function (location) {
+                if (callbacks.onsuccess) {
+                    callbacks.onsuccess(location);
+                }
+            },
+            onerror: function (error) {
+                if (callbacks.onerror) {
+                    callbacks.onerror(error);
+                }
+            }
+        };
+        core.postMessage({
+            method: 'getCurrentPosition',
+            callbackId: core.registerCallback(intercepted),
+            args: {
+                option: option
+            }
+        });
+    };
+    return Geolocation;
+}());
+/**
+ * Context engine.
+ * @class ContextEngine
+ * @memberof da
+ */
+var ContextEngine = (function () {
+    function ContextEngine() {
+    }
+    /**
+     * Callback method to be invoked when current context was successfully retrieved.
+     * @callback da.ContextEngine.onsuccess
+     * @param context {Object}
+     * @param context.place {string} place information for current location of the user (Set to null until the context is recognized)
+     * &lt;ul>
+     *  &lt;li> home: home
+     *  &lt;li> office: office
+     *  &lt;li> otherPlace: other place
+     * &lt;/ul>
+     * @param context.transportation {string} state of movement. (Set to null until the context is recognized)
+     * &lt;ul>
+     *  &lt;li> goingToWork: going to work
+     *  &lt;li> leavingWork: heading home from work
+     *  &lt;li> otherTransportation: other movement
+     *  &lt;li> notMoving: not moving
+     * &lt;/ul>
+     * @param context.activity {string} activity. (Set to null until the context is recognized)
+     * &lt;ul>
+     *  &lt;li> staying: staying
+     *  &lt;li> walking: walking
+     *  &lt;li> running: running
+     *  &lt;li> ridingBicycle: riding a bicycle
+     *  &lt;li> gettingOnVehicle: on a vehicle (auto, bus, train)
+     * &lt;/ul>
+     */
+    /**
+     * Callback method to be invoked when current context could not be retrieved successfully.
+     * @callback da.ContextEngine~onerror
+     * @param error {Object} error object
+     * @param error.code {number} error code
+     * &lt;ul>
+     *  &lt;li>999: unidentified error
+     * &lt;/ul>
+     * @param error.message {string} detail of error
+     */
+    /**
+     * gets current context that is recognized by behavior recognition engine.
+     * @method getCurrentContext
+     * @memberof da.ContextEngine.prototype
+     * @param callbackObject {Object} callback object
+     * @param callbackObject.onsuccess {da.ContextEngine.onsuccess} callback function to be invoked when current context was successfully retrieved
+     * @param callbackObject.onerror {da.ContextEngine.onerror} callback function to be invoked when current context could not be retrieved successfully
+     */
+    ContextEngine.prototype.getCurrentContext = function (callbackObject) {
+        var intercepted = {
+            onsuccess: function (context) {
+                if (callbackObject.onsuccess) {
+                    callbackObject.onsuccess(context);
+                }
+            },
+            onerror: function (error) {
+                if (callbackObject.onerror) {
+                    callbackObject.onerror(error);
+                }
+            }
+        };
+        core.postMessage({
+            method: 'getCurrentContext',
+            callbackId: core.registerCallback(intercepted),
+            args: {}
+        });
+    };
+    return ContextEngine;
+}());
+/**
+ * @namespace da
+ */
+var DaPlatform = (function () {
+    function DaPlatform() {
+        var _this = this;
+        /**
+         * API version that is supported by the Segment runtime environment. &lt;br>
+         * &lt;br>
+         * Developer should implement Segment according to this version.
+         * @memberof da
+         * @const
+         */
+        this.VERSION = "0.2.7";
+        /**
+         * @namespace segment
+         * @memberof da
+         */
+        this.segment = {
+            /**
+             * Prepare for playing back a segment using onpreprocess.&lt;br>
+             * As the preparation of TTS and your preprocess implementation can take time due to fetching data from relevant service.&lt;br>
+             * The flow of playing back a segment:
+             * &lt;ol>
+             *   &lt;li>onpreprocess() callback
+             *   &lt;li>startSegment()
+             *   &lt;li>initialize speech of Segment
+             *   &lt;li>bumper playback
+             *   &lt;li>loop playback
+             *   &lt;li>onstart() callback
+             * &lt;/ol>
+             * You can call either of the functions below after your preprocess completed.
+             * &lt;ul>
+             *   &lt;li>startSegment(): to playback a segment
+             *   &lt;li>cancelSegment(): to cancel playback of the segment and terminate the segment
+             * &lt;/ul>
+             * &lt;br>
+             * ■Example of utilization
+             * &lt;ul>
+             *   &lt;li>Start getting data to utilize before playing a segment.
+             *   &lt;li>Evaluate whether to start or cancel the segment depending on the data.
+             * &lt;/ul>
+             * @callback onpreprocess
+             * @memberof da.segment
+             * @param trigger {string} launch type of a segment
+             *                         &lt;ul>
+             *                           &lt;li>voice: segment is launched by voice recognition
+             *                           &lt;li>launchRule: segment is launched by the rules described in LaunchRule.json
+             *                           &lt;li>worker: segment is launched by worker
+             *                         &lt;/ul>
+             * @param args {object} additional information provided from the framework
+             *                         &lt;ul>
+             *                           &lt;li>When launchMode is 'voice' ：&lt;br> an object of voice recognition
+             *                           &lt;li>When launchMode is 'launchRule' ：&lt;br> a set of objects corresponds to the launch rules in LaunchRules.json
+             *                           &lt;li>When launchMode is 'worker' ：&lt;br> set of objects in argumentObject.args
+             *                         &lt;/ul>
+             * @since 2.3
+             */
+            onpreprocess: function () {
+                // onpreprocess default process for undefined segments
+                _this.startSegment(null, null);
+            },
+            /**
+             * On playing a segment.
+             * @callback onstart
+             * @memberof da.segment
+             * @param trigger {string} Launch type of a segment. It can be 'voice' or 'launchRule' or 'worker'.
+             * @param args {object} The value shown below is passed depending on the value set to argumentObject in da.startSegment(launchType, argumentObject).
+             *                           &lt;ul>
+             *                             &lt;li> When null is set：The object same as the arg gotten in onpreprocess is set.
+             *                             &lt;li> When value except null is set：The object specified as argumentObject.args is set.
+             *                           &lt;/ul>
+             */
+            onstart: null,
+            /**
+             * When the segment ends.&lt;br>
+             * &lt;br>
+             * ■Example of utilization
+             * &lt;ul>
+             * &lt;li>Save IDs of information read out into the storage.
+             * &lt;/ul>
+             * &lt;br>
+             * ■Restriction
+             * &lt;ul>
+             * &lt;li>Do not implement a process that waits for asynchronous responses.&lt;br>It is possible that such a process is discontinued, as the segment ends without waiting for the response.
+             * &lt;/ul>
+             * @callback onstop
+             * @memberof da.segment
+             */
+            onstop: null,
+            /**
+             * Called when the segment is paused,&lt;br>
+             * System mutes the volume level of your segment.&lt;br>
+             * The segment has to be implemented to manage and suspend its process from onpause trigger to until onresume is called.&lt;br>
+             * &lt;br>
+             * ■Example of implementation that you may want to have in onpause
+             * &lt;ul>
+             * &lt;li>Saving playback condition of the segment to continue when onresume is triggered afterwards.
+             * &lt;li>Prevent TTS from playing despite onpause triggers.
+             * &lt;/ul>
+             * &lt;br>
+             * ■Triggered when following activities occur;
+             * &lt;ul>
+             * &lt;li>voice recognition is started by a user.
+             * &lt;li>interruption by system occurs, such as notifications.
+             * &lt;/ul>
+             * @callback onpause
+             * @memberof da.segment
+             */
+            onpause: null,
+            /**
+             * Called when the paused segment playback is resumed.&lt;br>
+             * &lt;br>
+             * ■example of implementation
+             * &lt;ul>
+             * &lt;li>Restoring playback condition of the segment from same state as you saved when onpause was triggered.
+             * &lt;/ul>
+             * &lt;br>
+             * ■Triggered when
+             * &lt;ul>
+             * &lt;li>the interruption process has finished.
+             * &lt;li>the voice recognition that started by a user has finished.
+             * &lt;/ul>
+             * @callback onresume
+             * @memberof da.segment
+             */
+            onresume: null,
+            /**
+             * Called when a voice command is recognized.
+             * @callback oncommand
+             * @memberof da.segment
+             * @param commandObject {object}
+             * @param commandObject.command {string} Voice command
+             *                           &lt;ul>
+             *                             &lt;li> next：moves to next topic.
+             *                             &lt;li> previous：moves to the previous topic.
+             *                             &lt;li> again：repeats the current topic.
+             *                             &lt;li> detail：gets detail of the current topic.
+             *                             &lt;li> other: gets other topic.
+             *                             &lt;li> bookmark：saves the current topic as a bookmark.
+             *                           &lt;/ul>
+             * @return {boolean} consumed
+             * When the input command is used, true is returned. If not, return false.
+             */
+            oncommand: function () { return false; }
+        };
+        /*
+         * Segment Player
+         */
+        this.SpeechSynthesis = SpeechSynthesis;
+        this.Storage = Storage;
+        this.Geolocation = Geolocation;
+        this.ContextEngine = ContextEngine;
+    }
+    /**
+     * error callback functions.
+     * @callback da.onerror
+     * @param error {Object} error object
+     * @param error.code {number} error code
+     * &lt;ul>
+     *  &lt;li>999: unidentified error
+     * &lt;ul>
+     * @param error.message {string} detail message of this error
+     */
+    /*
+     *  Worker Player
+     */
+    /**
+     * Requests playback by Worker.
+     *
+     * The flow of playing back a segment by Worker.
+     * &lt;ol>
+     *   &lt;li>onpreprocess("WORKER", args) is called. (argumentObject.args given by this API is set to args)
+     *   &lt;li>call da.startSegment(launchType, argumentObject) in onpreprocess
+     *       &lt;ul>
+     *       &lt;li>When argumentObject is set to Null&lt;br>
+     *          The same argment as argumentObject.args given by this API is passed to onstart(arguments).
+     *       &lt;li>When argumentObject is set as other than Null&lt;br>
+     *          argumentObject.args, property of argumentObject given by da.startSegment is passed to onstart(arguments) as an argument.
+     *       &lt;/ul>
+     *   &lt;/li>
+     * &lt;/ol>
+     *
+     * @method requestStartSegment
+     * @memberof da
+     * @param launchType {string} Type of Segment to be started [simple: Simple type, full: Full type]
+     * @param argumentObject {Object}
+     * @param argumentObject.cueVoice {string} script of initial speech. An arbitrary key given in scripts.json
+     * @param argumentObject.cueVoiceArgs {Array.&lt;string>} Data to be inserted to template of above script??
+     * @param argumentObject.args {object} Data passed to a segment (passed to onpreprocess(), onstart())
+     */
+    DaPlatform.prototype.requestStartSegment = function (launchType, argumentObject) {
+        core.postMessage({ method: 'requestStartSegment', args: { launchType: launchType, argumentObject: argumentObject } });
+    };
+    /**
+     * Stops Worker that stops a Segment.&lt;br>
+     *
+     * @method stopWorker
+     * @memberof da
+     */
+    DaPlatform.prototype.stopWorker = function () {
+        core.postMessage({ method: 'stopSegment' });
+    };
+    /**
+     * Returns a XMLHttpRequest object to access to external service.
+     * @method getXhr
+     * @memberof da
+     * @return {XMLHttpRequest} XHR object
+     */
+    DaPlatform.prototype.getXhr = function () {
+        return new XMLHttpRequestXS_1["default"]();
+    };
+    /**
+     * Starts a Segment.
+     * @method startSegment
+     * @since 2.3
+     * @memberof da
+     * @param launchType {string} Type of Segment to be started. To use the previous value, set it to null. [simple: Simple type, full: Full type] &lt;br>
+     * Only when trigger of onpreprocess is launchRule or worker, this is valid.
+     * @param argumentObject {object} Script value of initial speech from script.js. An arbitrary key is given by scripts.json. To use the previous value, set it null.
+     * @param argumentObject.cueVoice {string} Script value of initial speech. An arbitrary key is given by scripts.json
+     * @param argumentObject.cueVoiceArgs {Array.&lt;string>} Data to be inserted to template of the script of initial speech.
+     * @param argumentObject.args {object} Data passed to a segment (passed to onpreprocess(), onstart())
+     */
+    DaPlatform.prototype.startSegment = function (launchType, argumentObject) {
+        core.postMessage({ method: 'startSegment', args: { launchType: launchType, argumentObject: argumentObject } });
+    };
+    /**
+     * Cancels playback of a Segment.&lt;br>
+     * &lt;br>
+     * Cancels playback of a Segment in preprocess.
+     * @method cancelSegment
+     * @memberof da
+     */
+    DaPlatform.prototype.cancelSegment = function () {
+        core.postMessage({ method: 'stopSegment' });
+    };
+    DaPlatform.prototype.getDeviceToken = function () {
+        var tokenInfo = core.tokenInfo;
+        return JSON.stringify(tokenInfo);
+    };
+    /**
+     * Adds an entry to the timeline.
+     * @method addTimeline
+     * @since 2.4
+     * @memberof da
+     * @param entry {object} The object to be added to the timeline
+     * @param entry.entries {Array.&lt;Object>} An array that contains information of entries. Entries are displayed in the same order as they are sorted in the array.
+     * @param entry.entries[].title {string} Title of the entry
+     * @param entry.entries[].url {string} URL of an entry resource
+     * @param entry.entries[].imageUrl {string} Image URL for the icon of the entry.
+     * @param entry.entries[].date {string} The date when the entry is generated (ISO-8601)
+     * @param entry.entries[].domain {string} domain of information source
+     *
+     * @returns {Object} error Returns an error object when the entry is not successfully added; returns null when the entry is successfully added to the timeline.
+     * @returns {number} error.code error code
+     * &lt;ul>
+     *  &lt;li>900: authentication error
+     *  &lt;li>999: unidentified error
+     * &lt;ul>
+     * @returns {string} error.message detail message of this error
+     */
+    DaPlatform.prototype.addTimeline = function (entryRequest) {
+        if (core.alreadyLogged) {
+            core.postMessage({ method: 'addTimeline', args: entryRequest });
+        }
+        return core.alreadyLogged ? null : { code: 900, message: "not signed." };
+    };
+    /**
+     * Adds an entry to the bookmark.
+     * @method registerBookmark
+     * @since 2.4
+     * @memberof da
+     * @param entry {object} The object to be added to the bookmark
+     * @param entry.entries {Array.&lt;Object>} An array that contains information of entries. Entries are displayed in the same order as they are sorted in the Array.
+     * @param entry.entries[].title {string} Title of the entry
+     * @param entry.entries[].url {string} URL of entry resource
+     * @param entry.entries[].imageUrl {string} Image URL for the icon of the entry.
+     * @param entry.entries[].date {string} date of the entry is generated (ISO-8601)
+     * @param entry.entries[].domain {string} domain of information source
+     *
+     * @returns {Object} error An error object returned when the entry is not successfully added; returns null when the entry is successfully added.
+     * @returns {number} error.code error code
+     * &lt;ul>
+     *  &lt;li>900: authentication error
+     *  &lt;li>999: unidentified error
+     * &lt;ul>
+     * @returns {string} error.message detail message of this error
+     */
+    DaPlatform.prototype.registerBookmark = function (entryRequest) {
+        if (core.alreadyLogged) {
+            core.postMessage({ method: 'registerBookmark', args: entryRequest });
+        }
+        return core.alreadyLogged ? null : { code: 900, message: "not signed." };
+    };
+    /**
+     * Terminates the segment.
+     * @method stopSegment
+     * @memberof da
+     */
+    DaPlatform.prototype.stopSegment = function () {
+        core.postMessage({ method: 'stopSegment' });
+    };
+    /**
+     * Gets configuration options of segments stored in the server.&lt;br>
+     * The options are the current Key-Value pairs created from
+     * (root).defaultValues.settings in res/settings/defaultValues.json
+     * and overwritten by the settings set by setSegmentConfig().
+     *
+     * @method getSegmentConfig
+     * @memberof da
+     * @param callbackObject {Object}
+     * @param callbackObject.onsuccess {function} callback function to be invoked when the configuration is successfully retrieved.
+     * @param callbackObject.onsuccess.jsonObject {Object} Json object containing the configuration values
+     * @param callbackObject.onerror {da.onerror} callback function to be invoked when the configuration could not be retrieved successfully.
+     */
+    DaPlatform.prototype.getSegmentConfig = function (callbacks) {
+        var intercepted = {
+            onsuccess: function (result) {
+                if (callbacks.onsuccess) {
+                    callbacks.onsuccess(result);
+                }
+            },
+            onerror: function (error) {
+                if (callbacks.onerror) {
+                    callbacks.onerror(error);
+                }
+            }
+        };
+        core.postMessage({ method: 'getSegmentConfig', args: null, callbackId: core.registerCallback(intercepted) });
+    };
+    /**
+     * Saves Segment configuration options to the server.&lt;br>
+     * Saves the object of schema defined in res/settings/schema.json.&lt;br>
+     * note: default value is set for the key which is not specified.
+     * @method setSegmentConfig
+     * @memberof da
+     * @param callbackObject {Object}
+     * @param callbackObject.onsuccess {function} callback function to be invoked when the configuration options are successfully updated.
+     * @param callbackObject.onsuccess.jsonObject {Object} Json object that contains the configuration
+     * @param callbackObject.onerror {da.onerror} callback function to be invoked when the configuration options could not be updated successfully.
+     * @param jsonObject {Object} Json object containing the configuration values
+     */
+    DaPlatform.prototype.setSegmentConfig = function (callbacks, settings) {
+        var intercepted = {
+            onsuccess: function () {
+                if (callbacks.onsuccess) {
+                    callbacks.onsuccess();
+                }
+            },
+            onerror: function (error) {
+                if (callbacks.onerror) {
+                    callbacks.onerror(error);
+                }
+            }
+        };
+        core.postMessage({ method: 'setSegmentConfig', args: { settings: settings }, callbackId: core.registerCallback(intercepted) });
+    };
+    /**
+     * Gets string matching with key value out of string.json.
+     * When the meta expression (${xxxx}) is found in the obtained string, the portion is replaced with the string given as objectString.
+     * @method getString
+     * @since 2.3
+     * @memberof da
+     * @param key {String} key value to be get from string.json
+     * @param objectString {Object} the string object to replace the meta expression(${xxxx}) in the obtained string.
+     * @example
+     * ================================
+     * [string.json]
+     * {
+     *  "rt": [
+     *    "RT @${name}\:*"
+     *  ]
+     * }
+     * ================================
+     * [How to use (when mention.screen_name = "RENA")]
+     * var text = da.getString("rt", { name: mention.screen_name });
+     * -> "RT @RENA\:*" is stored to text.
+     * ================================
+     */
+    DaPlatform.prototype.getString = function (key, methodArgs) {
+        if (!key) {
+            return "";
+        }
+        var template = ScriptsReplacer_1["default"].getTalkString(core.talkStrings, key);
+        if (!template) {
+            // null string is returned, when no element specified by key is found in string.json.
+            return '';
+        }
+        return ScriptsReplacer_1["default"].replaceArgs(template, core.systemArgs, core.cueVoiceArgs, methodArgs);
+    };
+    ;
+    /**
+     * Gets an OAuthAccessToken obtained by OAuth procedure in Segment.&lt;br>
+     * AccessToken is obtained by OAuth procedure on mobile host application based on the configuration described in oauth.json. The AccessToken is stored on server you can obtain it by this API.
+     * @method getOAuthAccessToken
+     * @since 2.3
+     * @memberof da
+     * @param segmentOAuthId {string} segmentOAuthId that is associated to the OAuthAccessToken
+     * @param callbackObject {Object}
+     * @param callbackObject.onsuccess {function} callback function to be invoked when the OAuthAccessToken successfully is retrieved.
+     * @param callbackObject.onsuccess.jsonObject {Object}
+     * @param callbackObject.onerror {da.onerror} callback function to be invoked when the OAuthAccessToken could not be retrieved successfully.
+     * @param noCache {boolean} whether the token is cashed or not.
+     */
+    DaPlatform.prototype.getOAuthAccessToken = function (segmentOAuthId, callbacks, noCache) {
+        var intercepted = {
+            onsuccess: function (result) {
+                if (callbacks.onsuccess) {
+                    callbacks.onsuccess(result);
+                }
+            },
+            onerror: function (error) {
+                if (callbacks.onerror) {
+                    callbacks.onerror(error);
+                }
+            }
+        };
+        core.postMessage({ method: 'getOAuthAccessToken', args: { segmentOAuthId: segmentOAuthId, noCache: noCache }, callbackId: core.registerCallback(intercepted) });
+    };
+    /**
+     * Gets the battery level.
+     * @method getBatteryLevel
+     * @memberof da
+     * @return {number} [0.0:empty - 1.0:full]
+     */
+    DaPlatform.prototype.getBatteryLevel = function () {
+        return core.batteryLevel;
+    };
+    return DaPlatform;
+}());
+da = new DaPlatform();
+core.initialize(da.segment);
+exports.__esModule = true;
+exports["default"] = da;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="da.ContextEngine.html">ContextEngine</a></li><li><a href="da.Geolocation.html">Geolocation</a></li><li><a href="da.SpeechSynthesis.html">SpeechSynthesis</a></li><li><a href="da.Storage.html">Storage</a></li></ul><h3>Namespaces</h3><ul><li><a href="da.html">da</a></li><li><a href="da.segment.html">segment</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 05 2016 10:28:44 GMT+0900 (東京 (標準時))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "defaultValues": {
+    "scope": "com.sony.da.speechtotextapitest",
+    "version": "1.0",
+    "settings": {
+      "oauth": false
+    }
+  }
+}

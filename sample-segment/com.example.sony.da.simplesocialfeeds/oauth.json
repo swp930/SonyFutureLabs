@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "settings": [
+    {
+      "id": 0,
+      "provider": "twitter",
+      "clientId": "",
+      "clientSecret": ""
+    }
+  ]
+}

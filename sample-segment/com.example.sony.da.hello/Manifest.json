@@ -1,0 +1,11 @@
+{
+  "package": "com.example.sony.da.hello",
+  "manifestVersion": 1,
+  "name": "Hello",
+  "author": {
+    "name": "Sony"
+  },
+  "version": 1,
+  "versionName": "1.0.0",
+  "description": "Sony Corporation\nSpeaks 'Hello World!'"
+}

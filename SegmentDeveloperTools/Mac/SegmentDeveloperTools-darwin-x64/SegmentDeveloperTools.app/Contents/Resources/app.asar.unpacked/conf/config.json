@@ -1,0 +1,46 @@
+{
+  "application": {
+    "da_http_port": 7700,
+    "segment_http_port": 7800,
+    "oauth_http_port": 7900
+  },
+  "settings": {
+    "apiLevel": "1",
+    "audio": {
+      "bgmVolume": 100,
+      "readoutVolume": 100
+    }
+  },
+  "condition": {
+    "location": {
+      "coords": {
+        "latitude": 37.774929,
+        "longitude": -122.419416,
+        "speed": 10
+      }
+    },
+    "localLocation": {
+      "home": {
+        "latitude": 37.774929,
+        "longitude": -122.419416
+      },
+      "work": {
+        "latitude": 37.774929,
+        "longitude": -122.419416
+      }
+    },
+    "context": {
+      "place": "home",
+      "move": "going to work",
+      "action": "stationary",
+      "batteryLevel": 0.9
+    }
+  },
+  "window": {
+    "main": {
+      "maximized": false,
+      "width": 1024,
+      "height": 873
+    }
+  }
+}

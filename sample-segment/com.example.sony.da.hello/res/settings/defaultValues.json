@@ -1,0 +1,7 @@
+{
+  "defaultValues": {
+    "scope": "com.example.sony.da.hello",
+    "version": "1.0",
+    "settings": {}
+  }
+}

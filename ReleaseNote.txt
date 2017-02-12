@@ -1,0 +1,21 @@
+Segment SDK
+Copyright 2016 Sony Corporation
+
+Revisions
+	Segment SDK v1.0.0 Dec 2016
+		First release
+			Segment Developer Tools is an application for testing and packaging segments for Future Lab Program N.
+
+
+
+
+
+
+The Developer guide for the Segment API is available at https://developer.sony.com/develop/future-lab-program/n/get-started .
+
+
+"Future Lab Program" and all other logos are registered trademarks or trademarks of Sony Corporation in Japan and other countries. Other product names and/or company names used here may be protected as their trademarks and/or trade names.
+
+
+
+

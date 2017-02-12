@@ -1,0 +1,118 @@
+{
+  "voicePattern": [
+    {
+      "domain": "CUSTOMAPP",
+      "name": [
+        "running timer"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "comment": "Counter, Trigger: every 10 minutes / State: Activity is RUNNING or WALKING, and the interval is 10",
+      "argumentObject": {
+        "cueVoice": "launchRulesAnnounce",
+        "cueVoiceArgs": ["launch rules"],
+        "args": "count"
+      },
+      "trigger": {
+        "repeat": [
+          10
+        ]
+      },
+      "state": {
+        "activity": [
+          "RUNNING",
+          "WALKING"
+        ],
+        "intervalFromPrevious": [
+          10
+        ]
+      }
+    },
+    {
+      "comment": "Check point, Trigger: geofence (3 points) / State: Activity is RUNNING or WALKING",
+      "argumentObject": {
+        "cueVoice": "launchRulesAnnounce",
+        "cueVoiceArgs": ["launch rules"],
+        "args": "count"
+      },
+      "trigger": {
+        "geofence": [
+          {
+            "geo": {
+              "latitude": 21.306929,
+              "longitude": -157.860219,
+              "radius": 100
+            },
+            "enterExit": "ENTER"
+          },
+          {
+            "geo": {
+              "latitude": 21.28476,
+              "longitude": -157.83812,
+              "radius": 100
+            },
+            "enterExit": "ENTER"
+          },
+          {
+            "geo": {
+              "latitude": 21.273451,
+              "longitude": -157.823636,
+              "radius": 100
+            },
+            "enterExit": "ENTER"
+          }
+        ]
+      },
+      "state": {
+        "activity": [
+          "RUNNING",
+          "WALKING"
+        ]
+      }
+    },
+    {
+      "comment": "Start Timer, Trigger: Activity is changed from STILL to RUNNING or WALKING / State: none",
+      "argumentObject": {
+        "cueVoice": "launchRulesAnnounce",
+        "cueVoiceArgs": ["launch rules"],
+        "args": "start"
+      },
+      "trigger": {
+        "activityChange": [
+          {
+            "beforeActivity": [
+              "STAYING"
+            ],
+            "afterActivity": [
+              "RUNNING",
+              "WALKING"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "comment": "Stop Timer, Trigger: Activity is changed from RUNNING or WALKING to STILL / State: none",
+      "argumentObject": {
+        "cueVoice": "launchRulesAnnounce",
+        "cueVoiceArgs": ["launch rules"],
+        "args": "stop"
+      },
+      "trigger": {
+        "activityChange": [
+          {
+            "beforeActivity": [
+              "RUNNING",
+              "WALKING"
+            ],
+            "afterActivity": [
+              "STAYING"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

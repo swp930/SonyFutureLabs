@@ -1,0 +1,23 @@
+{
+  "startTimerWithPosition": [
+    "It's ${currentTime} and ${currentSec} seconds. Current position is ${address}."
+  ],
+  "startTimer": [
+    "It's ${currentTime} and ${currentSec} seconds."
+  ],
+  "countTimerWithPosition": [
+    "It's ${currentTime} and ${currentSec} seconds. Current position is ${address}. ${elapsedMinutes} minutes ${elapsedSeconds} seconds elapsed."
+  ],
+  "countTimer": [
+    "It's ${currentTime} and ${currentSec} seconds. ${elapsedMinutes} minutes ${elapsedSeconds} seconds elapsed."
+  ],
+  "localityChange": [
+    "Locality is changed to ${locality}."
+  ],
+  "noStartTimer": [
+    "There is no start time. Please start running timer segment first."
+  ],
+  "stopTimer": [
+    " The timer has stopped."
+  ]
+}

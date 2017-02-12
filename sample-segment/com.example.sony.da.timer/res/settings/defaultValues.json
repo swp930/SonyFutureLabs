@@ -1,0 +1,9 @@
+{
+  "defaultValues": {
+    "scope": "com.example.sony.da.timer",
+    "version": "1.0",
+    "settings": {
+      "isPositionAnnounced": true
+    }
+  }
+}

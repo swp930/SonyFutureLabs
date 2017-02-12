@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: ContextEngine</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: ContextEngine</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="da.html">da</a>.</span>
+        
+        ContextEngine
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        <hr>
+
+
+    
+
+    <h4 class="name" id="ContextEngine"><span class="type-signature"></span>new ContextEngine<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+    <div class="description">
+        Context engine constructor. This class helps to determine a user's current context. For instance home, work, etc...
+    </div>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Method Summary</h3>
+        <div class="description">
+        <table class="params"><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody>
+        
+            <tr><td><a href="da.ContextEngine.html#getCurrentContext">getCurrentContext</a></td>
+            <td>Gets current context that is recognized by N's Context Recognition System</br>Current context is null before it is successfully retrieved.</td>
+            </tr>
+        </tbody></table></div>
+
+        <h3 class="subsection-title">Method Detail</h3>
+        
+            <hr>
+
+
+    
+
+    <h4 class="name" id="getCurrentContext"><span class="type-signature"></span>getCurrentContext<span class="signature">(callbackObject)</span><span class="type-signature"></span></h4>
+
+    
+    <div class="description">
+        Gets current context that is recognized by N's Context Recognition System</br>Current context is null before it is successfully retrieved.
+    </div>
+    
+
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                callbackObject
+            
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            callback object
+            <div class="subparams">
+                
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                onsuccess
+            
+            
+                
+<span class="param-type"><a href="da.ContextEngine.html#~onsuccess">da.ContextEngine~onsuccess</a></span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            The callback function to be invoked when current context is successfully retrieved.
+            <div class="subparams">
+                
+            </div>
+        </td>
+    </tr>
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                onerror
+            
+            
+                
+<span class="param-type"><a href="da.ContextEngine.html#~onerror">da.ContextEngine~onerror</a></span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            The callback function to be invoked when the retrieval fails.
+            <div class="subparams">
+                
+            </div>
+        </td>
+    </tr>
+    
+</table>
+
+                
+            </div>
+        </td>
+    </tr>
+    
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                <hr>
+
+
+    
+
+    <h4 class="name" id="~onerror"><span class="type-signature"></span>onerror<span class="signature">(error)</span><span class="type-signature"></span></h4>
+
+    
+    <div class="description">
+        The callback method to be invoked when the retrieval fails.
+    </div>
+    
+
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                error
+            
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            The error object
+            <div class="subparams">
+                
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                code
+            
+            
+                
+<span class="param-type">number</span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            The error code<ul> <li>999: unidentified error</ul>
+            <div class="subparams">
+                
+            </div>
+        </td>
+    </tr>
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                message
+            
+            
+                
+<span class="param-type">string</span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            The error message
+            <div class="subparams">
+                
+            </div>
+        </td>
+    </tr>
+    
+</table>
+
+                
+            </div>
+        </td>
+    </tr>
+    
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                <hr>
+
+
+    
+
+    <h4 class="name" id="~onsuccess"><span class="type-signature"></span>onsuccess<span class="signature">(context)</span><span class="type-signature"></span></h4>
+
+    
+    <div class="description">
+        The callback method to be invoked when current context is successfully retrieved.
+    </div>
+    
+
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                context
+            
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            
+            <div class="subparams">
+                
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                place
+            
+            
+                
+<span class="param-type">string</span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            The current location of the user</br>Constant values:<ul> <li> home <li> office <li> otherPlace</ul>
+            <div class="subparams">
+                
+            </div>
+        </td>
+    </tr>
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                transportation
+            
+            
+                
+<span class="param-type">string</span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            The user's movement state.</br>Constant values:<ul> <li> goingToWork <li> leavingWork <li> otherTransportation <li> notMoving</ul>
+            <div class="subparams">
+                
+            </div>
+        </td>
+    </tr>
+    
+    <thead>
+    <tr>
+        <td class="name">
+            
+                activity
+            
+            
+                
+<span class="param-type">string</span>
+
+
+            
+        </td>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+            The current user's activity.</br>Constant values:<ul> <li> staying <li> walking <li> running <li> ridingBicycle <li> gettingOnCar </ul>
+            <div class="subparams">
+                
+            </div>
+        </td>
+    </tr>
+    
+</table>
+
+                
+            </div>
+        </td>
+    </tr>
+    
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Segment API</a></h2><h3>Classes</h3><ul><li><a href="da.ContextEngine.html">ContextEngine</a></li><li><a href="da.Geolocation.html">Geolocation</a></li><li><a href="da.SpeechSynthesis.html">SpeechSynthesis</a></li><li><a href="da.SpeechToText.html">SpeechToText</a></li><li><a href="da.Storage.html">Storage</a></li></ul><h3>Namespaces</h3><ul><li><a href="da.html">da</a></li><li><a href="da.segment.html">segment</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

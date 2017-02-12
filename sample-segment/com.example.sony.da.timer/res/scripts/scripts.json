@@ -1,0 +1,9 @@
+{
+  "segmentStart": {
+    "common": "Start segment",
+    "launchRulesAnnounce": "Start segment from ${ARG0}"
+  },
+  "segmentEnd": {
+    "common": "Stop segment"
+  }
+}

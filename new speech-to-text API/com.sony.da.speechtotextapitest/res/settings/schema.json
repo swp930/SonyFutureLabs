@@ -1,0 +1,13 @@
+{
+  "schema": {
+    "scope": "com.sony.da.speechtotextapitest",
+    "version": "1.0",
+    "settings": [
+      {
+        "key": "description",
+        "displayName": "Test segment for Speech To Text API",
+        "layout": "description"
+      }
+    ]
+  }
+}

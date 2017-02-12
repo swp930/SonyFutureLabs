@@ -1,0 +1,19 @@
+{
+  "schema": {
+    "scope": "com.example.sony.da.simplesocialfeeds",
+    "version": "1.0",
+    "settings": [
+      {
+        "key": "description",
+        "displayName": "This segment signs into Twitter with OAuth authentication and speaks the latest tweet in your feed. Also, you can control the segment using voice commands.\n\n<Voice commands>\nThis segment is limited to be started up with the following voice commands.\n - Start simple tweet\n - Check simple tweet\n\n<Contact us>\nhttps://www.sony.com",
+        "layout": "description"
+      },
+      {
+        "key": "oauth",
+        "displayName": "Account Setting",
+        "layout": "button",
+        "oauthId": 0
+      }
+    ]
+  }
+}

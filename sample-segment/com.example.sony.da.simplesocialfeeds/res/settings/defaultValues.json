@@ -1,0 +1,9 @@
+{
+  "defaultValues": {
+    "scope": "com.example.sony.da.simplesocialfeeds",
+    "version": "1.0",
+    "settings": {
+      "oauth": false
+    }
+  }
+}

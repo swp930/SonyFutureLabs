@@ -1,0 +1,28 @@
+{
+  "schema": {
+    "scope": "com.example.sony.da.timer",
+    "version": "1.0",
+    "settings": [
+      {
+        "key": "description",
+        "displayName": "Speaks the current time and location periodically, speaks the elapsed time from the first launch when the device enters in the given location, and is additionally triggered by changes in activities, as defined in the launch rules.\nThis segment uses your location information in order to make our service work for you, like helping you to find local events nearby current position of you.\n\n<Voice commands>\nThis segment is limited to be started up with the following voice commands.\n- Start running timer\n - Check running timer\n\n<Contact us>\nhttps://www.sony.com",
+        "layout": "description"
+      },
+      {
+        "key": "isPositionAnnounced",
+        "displayName": "Position Announce settings",
+        "layout": "selection",
+        "items": [
+          {
+            "displayName": "On",
+            "value": true
+          },
+          {
+            "displayName": "Off",
+            "value": false
+          }
+        ]
+      }
+    ]
+  }
+}

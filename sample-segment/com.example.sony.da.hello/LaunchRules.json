@@ -1,0 +1,10 @@
+{
+  "voicePattern": [
+    {
+      "domain": "CUSTOMAPP",
+      "name": [
+        "sample hello"
+      ]
+    }
+  ]
+}

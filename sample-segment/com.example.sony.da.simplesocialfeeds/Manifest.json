@@ -1,0 +1,12 @@
+{
+  "package": "com.example.sony.da.simplesocialfeeds",
+  "manifestVersion": 1,
+  "name": "Simple Social Feeds",
+  "shortName": "Simple Social Feeds",
+  "author": {
+    "name": "Sony"
+  },
+  "version": 1,
+  "versionName": "1.0.0",
+  "description": "Sony Corporation\nSpeaks the latest tweet in your feed."
+}

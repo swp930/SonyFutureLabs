@@ -1,0 +1,32 @@
+{
+  "noSupported": [
+    "The Function is not supported in this segment."
+  ],
+  "nameFormat": [
+    "${userName} "
+  ],
+  "authErrMsg": [
+    "Please log in to Twitter with your account on the smartphone host application."
+  ],
+  "reTweetNameFormat": [
+    "ReTweet ${userName}'s tweet."
+  ],
+  "fromTweetMsg": [
+    "Tweet, ${userName}, "
+  ],
+  "dataNotFoundMsg": [
+    "There was no Tweet."
+  ],
+  "bookmarkMsg": [
+    "Bookmarked ${userName}'s tweet."
+  ],
+  "getDataFailMsg": [
+    "Failed to get data. This segment is going to be ended."
+  ],
+  "retweetCount": [
+    "Retweet ${count}."
+  ],
+  "favoriteCount": [
+    "Favorite ${count}."
+  ]
+}

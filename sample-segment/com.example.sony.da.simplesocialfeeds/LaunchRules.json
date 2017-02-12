@@ -1,0 +1,21 @@
+{
+  "voicePattern" : [{
+    "domain" : "CUSTOMAPP",
+    "name": ["simple tweet"]
+  }],
+  "rules": [
+    {
+      "comment":"Counter, Trigger: every 10 minutes / State: Interval from previous is 10 minutes",
+      "argumentObject": {
+        "cueVoice": "common",
+        "args": []
+      },
+      "trigger": {
+        "repeat": [10]
+      },
+      "state": {
+        "intervalFromPrevious" : [10]
+      }
+    }
+  ]
+}

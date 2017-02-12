@@ -1,0 +1,11 @@
+{
+  "package": "com.sony.da.speechtotextapitest",
+  "manifestVersion": 1,
+  "name": "Speech To Text API Test",
+  "author": {
+    "name": "Sony"
+  },
+  "version": 1,
+  "versionName": "1.0.10",
+  "description": "Test segment for Speech To Text API"
+}

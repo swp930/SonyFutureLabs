@@ -1,0 +1,8 @@
+{
+  "segmentStart": {
+    "common": "@{CueVoice_Common_Start}"
+  },
+  "segmentEnd": {
+    "common": "@{CueVoice_Common_End}"
+  }
+}
